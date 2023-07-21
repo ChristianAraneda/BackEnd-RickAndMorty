@@ -1,5 +1,5 @@
-require("dotenv").config();
-const PORT = process.env.PORT || 3001;
+// require("dotenv").config();
+const PORT = 3000;
 const morgan = require("morgan");
 const cors = require("cors");
 // Routers
@@ -9,23 +9,23 @@ const favoriteRouter = require("./routes/favorites");
 
 // Express
 const express = require("express");
-const server = express();
+const app = express();
 
 // Middlewars
-server.use(express.json()); // para poder recibir JSON por req.body
-server.use(morgan("dev")); // Me muestra en consola como sale la REQ y la RES
+app.use(express.json()); // para poder recibir JSON por req.body
+app.use(morgan("dev")); // Me muestra en consola como sale la REQ y la RES
 // Permisos -> Cors
-server.use(cors()); // Habilito las CORS para que cualquier origen pueda enviar solicitud a mi servidor
+app.use(cors()); // Habilito las CORS para que cualquier origen pueda enviar solicitud a mi servidor
 
 // Routers --> Que rutas voy a usar
-server.use("/character", characterRouter);
-server.use("/user", userRouter);
-server.use("/favorites", favoriteRouter);
+app.use("/character", characterRouter);
+app.use("/user", userRouter);
+app.use("/favorites", favoriteRouter);
 
-server.get("/health-check", (req, res) => {
+app.get("/health-check", (req, res) => {
   res.send("Working");
 });
 
-server.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server raised in port: ${PORT}`);
 });
